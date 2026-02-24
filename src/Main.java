@@ -1,31 +1,49 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Scanner;
 
-public class Main{
+public class Main {
 
-    public static void main(String[] args) {
+    // Method to check palindrome using Deque
+    public static boolean isPalindrome(String input) {
 
-        String input = "civic";
+        // Convert to lowercase and remove spaces
+        input = input.replaceAll("\\s+", "").toLowerCase();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        for (char c : input.toCharArray()) {
-            queue.add(c);
-            stack.push(c);
+        // Insert characters into deque
+        for (char ch : input.toCharArray()) {
+            deque.addLast(ch);
         }
 
-        boolean isPalindrome = true;
+        // Compare front and rear
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-        while (!queue.isEmpty()) {
-            if (queue.remove() != stack.pop()) {
-                isPalindrome = false;
-                break;
+            if (front != rear) {
+                return false;
             }
         }
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("===== UC7: Deque-Based Palindrome Checker =====");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        if (isPalindrome(input)) {
+            System.out.println("Result: The given string is a Palindrome.");
+        } else {
+            System.out.println("Result: The given string is NOT a Palindrome.");
+        }
+
+        scanner.close();
     }
 }
